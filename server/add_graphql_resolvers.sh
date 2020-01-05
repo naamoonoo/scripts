@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-if [ -z "$*" ] 
+if [ -z "$*" ]
 
  then
- echo "put argument with 'ROOT_FOLDER/FILE_NAME' format"
+ echo "put argument with 'ROOT_FOLDER/FILE_NAME m:mutation/q:query' format"
  exit 0
 
 fi
@@ -13,7 +13,7 @@ ROOT_FOLDER=`echo $1 | cut -d '/' -f1`
 
 echo `mkdir src/api/${ROOT_FOLDER}`
 echo `mkdir src/api/${ROOT_FOLDER}/${FILE_NAME}`
-echo `touch src/api/${ROOT_FOLDER}/${FILE_NAME}/${FILE_NAME}.graphql`
-echo `touch src/api/${ROOT_FOLDER}/${FILE_NAME}/${FILE_NAME}.resolvers.ts`
+echo `sh ~/Projects/scripts/server/create_graphql_file.sh $1 $2`
+echo `sh ~/Projects/scripts/server/create_resolvers_file.sh $1 $2`
 
 
