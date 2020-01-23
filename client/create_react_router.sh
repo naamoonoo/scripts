@@ -1,70 +1,78 @@
 #!/usr/bin/env bash
 
 if [ -z "$*" ]; then
- echo "put argument with RouterName c:container format"
+ echo "put argument with r:Routes/c:Components FolderName/ComponentName c:[if it has container] format"
  exit 0
 
 fi
 
-FILE_NAME=$1
-HAS_CONTAINER=$2
 
-echo `mkdir src/Routes/${FILE_NAME}`
+if [ "$1" == "c" ]; then
+	FOLDER="Components"
+elif [ "$1" == "r" ]; then
+	FOLDER="Routes"
+else
+	echo "put argument with r:Routes/c:Components FolderName/ComponentName c:container format"
+	exit1
+fi
+
+FILE_NAME=$2
+
+echo `mkdir src/${FOLDER}/${FILE_NAME}`
 
 echo `echo "import ${FILE_NAME}Presenter from './${FILE_NAME}Presenter'
 
-export default ${FILE_NAME}Presenter" > src/Routes/${FILE_NAME}/index.ts`
+export default ${FILE_NAME}Presenter" > src/${FOLDER}/${FILE_NAME}/index.ts`
 
 echo `echo "import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import * as S from './${FILE_NAME}Style';
 
-interface IProps extends RouteComponentProps {}
+interface IProps{}
 
 const ${FILE_NAME}Presenter: React.FC<IProps> = () => {
 	return <div>${FILE_NAME}Presenter</div>;
 };
 
-${FILE_NAME}Presenter.propTypes = {};
-
 export default ${FILE_NAME}Presenter;
-" > src/Routes/${FILE_NAME}/${FILE_NAME}Presenter.tsx`
+" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Presenter.tsx`
 
-echo `echo "import import styled from 'styled-components';
-" > src/Routes/${FILE_NAME}/${FILE_NAME}Style.ts`
-if [ "$2" == "c" ]; then
+echo `echo "import styled from 'styled-components';
+" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Style.ts`
+
+if [ "$3" == "c" ]; then
 
 
 	echo `echo "import React from 'react';
-	import { useQuery } from '@apollo/react-hooks';
 	import ${FILE_NAME}Presenter from './${FILE_NAME}Presenter';
-	import { ThemeProvider } from 'styled-components';
-	import { theme } from '../../theme';
 
 	const ${FILE_NAME}Container: React.FC = () => {
-		const { loading, error, data } = useQuery(QUERY);
-
-		if (loading) return <p>Loading...</p>;
-		if (error) return <p>Error :(</p>;
-
-		console.log(data);
 
 		return (
-			<ThemeProvider theme={theme}>
 				<${FILE_NAME}Presenter />
-			</ThemeProvider>
 		);
 	};
 
 	export default ${FILE_NAME}Container;
-	" > src/Routes/${FILE_NAME}/${FILE_NAME}Container.tsx`
+	" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Container.tsx`
 
 	echo `echo "import { gql } from 'apollo-boost'
 
-	" > src/Routes/${FILE_NAME}/${FILE_NAME}Queries.tsx`
+	" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Queries.ts`
 
 	echo `echo "import ${FILE_NAME}Container from './${FILE_NAME}Container'
 
-	export default ${FILE_NAME}Container" > src/Routes/${FILE_NAME}/index.ts`
+	export default ${FILE_NAME}Container" > src/${FOLDER}/${FILE_NAME}/index.ts`
+
+elif [ "$2" == "d" ]; then
+	echo `echo "import React from 'react';
+
+	const ${FILE_NAME}Presenter: React.FC = () => {
+		return <div>${FILE_NAME}Presenter</div>;
+	};
+
+	export default ${FILE_NAME}Presenter;
+	" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Presenter.tsx`
+
+	echo `rm src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Style.ts`
 fi
 
