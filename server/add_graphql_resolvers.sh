@@ -13,7 +13,9 @@ ROOT_FOLDER=`echo $1 | cut -d '/' -f1`
 
 echo `mkdir src/api/${ROOT_FOLDER}`
 echo `mkdir src/api/${ROOT_FOLDER}/${FILE_NAME}`
+echo `touch src/api/${ROOT_FOLDER}/${FILE_NAME}/errors.ts`
+echo `sh ~/Projects/scripts/server/create_test_file.sh $1 $2 $3`
 echo `sh ~/Projects/scripts/server/create_graphql_file.sh $1 $2`
-echo `sh ~/Projects/scripts/server/create_resolvers_file.sh $1 $2`
+echo `sh ~/Projects/scripts/server/create_resolvers_file.sh $1 $2 $3`
 
 

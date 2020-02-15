@@ -17,6 +17,7 @@ else
 fi
 
 FILE_NAME=$2
+STYLED_COMPONENT="import styled from 'styled-components';\n\nexport const Container = styled.div``"
 
 echo `mkdir src/${FOLDER}/${FILE_NAME}`
 
@@ -30,14 +31,13 @@ import * as S from './${FILE_NAME}Style';
 interface IProps{}
 
 const ${FILE_NAME}Presenter: React.FC<IProps> = () => {
-	return <div>${FILE_NAME}Presenter</div>;
+	return <S.Container>${FILE_NAME}</S.Container>;
 };
 
 export default ${FILE_NAME}Presenter;
 " > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Presenter.tsx`
 
-echo `echo "import styled from 'styled-components';
-" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Style.ts`
+echo `echo ${STYLED_COMPONENT} > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}Style.ts`
 
 if [ "$3" == "c" ]; then
 
