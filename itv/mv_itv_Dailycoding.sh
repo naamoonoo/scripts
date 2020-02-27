@@ -6,6 +6,11 @@ if [ -z "$*" ]; then
 
 fi
 
-echo `mkdir src/DailyCoding/$1`
-echo `mv ~/Downloads/FireShot/FireShot\ Capture\ $1* ./src/DailyCoding/$1/$1.pdf`
-echo `open ./src/DailyCoding/$1/$1.pdf`
+echo `ls ~/Downloads/FireShot | cut -d"soultion_"`
+# DATE=`date +"_%b_%d"`
+# echo `mkdir src/DailyCoding/$1${DATE}`
+# echo `mv ~/Downloads/FireShot/*$1* ./src/DailyCoding/$1${DATE}/$1.pdf`
+# echo `open ./src/DailyCoding/$1${DATE}/$1.pdf`
+# echo `touch ./src/DailyCoding/$1${DATE}/question.md`
+# echo `touch ./src/DailyCoding/$1${DATE}/solution.py`
+# echo `touch ./src/DailyCoding/$1${DATE}/test_solution.py`
