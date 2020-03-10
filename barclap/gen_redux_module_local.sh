@@ -1,17 +1,10 @@
 #!/usr/bin/env bash
 
-if [ -z "$*" ]; then
- echo "put argument with s:screens/c:components ComponentName "
- exit 0
-
-fi
-
 FILE_NAME=$1
 FIRST_CAP="$(tr '[:lower:]' '[:upper:]' <<< ${FILE_NAME:0:1})${FILE_NAME:1}"
 CAP="$(tr '[:lower:]' '[:upper:]' <<< ${FILE_NAME:0})"
-APPEND=`echo "${FIRST_CAP%?}"`
 
-secho `mkdir src/modules/${FILE_NAME}`
+echo `mkdir src/modules/${FILE_NAME}`
 
 echo `echo "
 export { default } from './reducer';
@@ -23,9 +16,9 @@ echo `echo "
 import { ActionType } from 'typesafe-actions';
 import * as actions from './actions';
 
-export type TokenAction = ActionType<typeof actions>;
+export type ${FIRST_CAP}Action = ActionType<typeof actions>;
 
-export type TokenState = I${FIRST_CAP}[];
+export type ${FIRST_CAP}State = I${FIRST_CAP};
 
 export interface I${FIRST_CAP} {
 }
@@ -47,30 +40,21 @@ export const delete${FIRST_CAP} = createAction(DELETE_${CAP})();
 
 echo `echo "
 import { createReducer } from 'typesafe-actions';
-import { I${FIRST_CAP}, TokenState, TokenAction } from './types';
+import { I${FIRST_CAP}, ${FIRST_CAP}State, ${FIRST_CAP}Action } from './types';
 import {
 	CREATE_${CAP},
 	UDPATE_${CAP},
 	DELETE_${CAP}
 } from './actions';
 
-const initialState: I${FIRST_CAP}[] = [];
+const initialState: I${FIRST_CAP} = {};
 
-const ${FILE_NAME} = createReducer<TokenState, TokenAction>(initialState, {
-	[CREATE_${CAP}]: (state, { payload: { token } }) => {
-		return { ...state,  };
-	},
-	[UDPATE_${CAP}]: (state, { payload: { id, amount } }) =>
-		state.map(product =>
-			product.product_id === id
-				? {
-						...product,
-						quantity: product.quantity + amount,
-				  }
-				: product,
-		),
-	[DELETE_${CAP}]: (state, { payload: { id } }) =>
-		state.filter(product => product.product_id !== id),
+const ${FILE_NAME} = createReducer<${FIRST_CAP}State, ${FIRST_CAP}Action>(initialState, {
+	[CREATE_${CAP}]: (state, { payload: {  } }) => ,
+
+	[UDPATE_${CAP}]: (state, { payload: {  } }) =>,
+
+	[DELETE_${CAP}]: (state, { payload: {  } }) =>,
 });
 
 export default ${FILE_NAME};
@@ -94,11 +78,11 @@ export const use${FIRST_CAP} = () => {
 
 	const ${FILE_NAME} = useSelector((state: RootState) => state.${FILE_NAME});
 
-	const onCreate${FIRST_CAP} = (${FILE_NAME}: I${FIRST_CAP}) => dispatch(create${FIRST_CAP}(${FILE_NAME}));
+	const onCreate${FIRST_CAP} = () => dispatch(create${FIRST_CAP}();
 
-	const onUpdate${FIRST_CAP} = (id: number, amount: number) => dispatch(update${FIRST_CAP}({ id, amount }));
+	const onUpdate${FIRST_CAP} = () => dispatch(update${FIRST_CAP}();
 
-	const onDelete${FIRST_CAP} = (id: number) => dispatch(delete${FIRST_CAP}({ id }));
+	const onDelete${FIRST_CAP} = () => dispatch(delete${FIRST_CAP}();
 
 	return {
 		${FILE_NAME},
