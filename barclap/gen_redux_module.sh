@@ -13,9 +13,9 @@ CAP="$(tr '[:lower:]' '[:upper:]' <<< ${FILE_NAME:0})"
 
 
 if [ "$2" == "A" ] || [ "$2" == "a" ]; then
-	echo `sh ~./gen_redux_module_async.sh $1`
+	echo `sh ./gen_redux_module_async.sh $1`
 elif [ "$2" == "L" ] || [ "$2" == "l" ]; then
-	echo `sh ~./gen_redux_module_local.sh $1`
+	echo `sh ./gen_redux_module_local.sh $1`
 else
 	echo ${ERROR}
 	exit 1
