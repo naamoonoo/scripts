@@ -10,3 +10,11 @@ first_line=`head -n1 ${COMMIT_MSG_FILE}`
 if [ -z "$first_line" ]; then
    sed -i ".bak" "1s/^/[#$issue_number] /" ${COMMIT_MSG_FILE}
  fi
+
+# npm install husky@next --save-dev
+
+# "husky" : {
+#   "hooks": {
+#     "prepare-commit-msg": ".${folder}/add_issue_number_into_commit.sh $HUSKY_GIT_PARAMS"
+#   }
+# }
